@@ -4,48 +4,48 @@
 In recent years, \gls{fc} has established itself as an approach to
 Cloud Computing at the edge of the network. Fog systems are typically
 characterized by the large number of geographically distributed
-nodes, ranging
-from embedded systems like network connected
-sensors to smartphones and end-user laptops
+nodes, ranging from embedded systems like network connected
+sensors, to smartphones and end-user laptops
 \cite{Bonomi:2012:FCR:2342509.2342513,Yi:2015:SFC:2757384.2757397,dastjerdi_fog_2016}.
 While leveraging the
 ubiquitous availability and specific capabilities of such devices brings
-many opportunities, it also bears new challenges unknown to traditional cloud
-services. Some of these challenges include the heterogeneity of fog
+many opportunities, it also carries new challenges unknown to traditional cloud
+services. Such challenges include the heterogeneity of fog
 nodes~\cite{Bonomi:2012:FCR:2342509.2342513,7868354,Yi:2015:SFC:2757384.2757397,mahmud_fog_2016},
 their accessibility, e.g. behind private networks, and extended security and
 privacy requirements \cite{botta_integration_2016}.
 
-Also, existing proposed \gls{fc} architectures have been described
+Another issue is that existing proposed \gls{fc} architectures have been described
 as ``siloed''~\cite{belli_design_2015}, referring to the lack of
 open interfaces that characterize today's Fog devices and infrastructures.
 Furthermore, opportunities and challenges have been widely addressed in the
 respective literature from a theoretical point of view, but actual \gls{fc}
-implementations --- let alone actively deployed and
-publicly available platforms that can be used in Fog contexts --- are rare.
-We review aspects of the rich existing literature below, and then
-proceed to introduce our platform Seattle.
-
+implementations—let alone actively deployed and
+publicly available platforms that can be used in Fog contexts—are rare.
+In this paper, we introduce our Seattle platform and make the case for why its
+unique designed is well suited for Fog computing applications. But,
+to provide context, we first review relevant aspects of the existing
+literature.
 
 \subsection{Related Work}
 
 Emerging technologies are a prospective area for research in \gls{fc}.
 Bellavista et al.~\cite{bellavista_feasibility_2017} investigate the
 applicability of Docker containers for \gls{fc}. The work uses and extends
-the open-source Kura framework to create \gls{IoT} gateways that control the information
-flow between Fog nodes and the Cloud, while also reviewing and benchmarking
+the open-source Kura framework to create \gls{IoT} gateways that control information
+flow between Fog nodes and a cloud, while also reviewing and benchmarking
 different container related technologies used in the Fog nodes.
 The focus of the work tends towards \gls{IoT} computing, where tailored services run
-on Fog nodes to gather data that is forwarded to the Cloud for further processing.
+on Fog nodes to gather data that is forwarded to the cloud for further processing.
 A similar evaluation of Docker containers for edge computing can be found in
 \cite{ismail_evaluation_2015}.
 
 Others have contributed Fog platforms for very specific use cases, e.g.
-an emergency alert system using smartphones that propagate alerts to nearby
-emergency departments \cite{7134091}; an idea also treated by Masip
-et al.~\cite{masip-bruin_foggy_2016}. Gazis et al. propose an ``Adaptive
-Operations Platform''
-to effectively apply equipment failure models in the context of Industrial
+an emergency alert system using smartphones that propagates alerts to nearby
+emergency departments \cite{7134091}, an idea also proposed by Masip
+et al.~\cite{masip-bruin_foggy_2016}. Gazis et al. introduce an ``Adaptive
+Operations Platform'' to effectively apply equipment failure models within the
+context of industrial applications of
 \gls{IoT} \cite{gazis_components_2015}.
 Amrutur et al.\cite{amrutur_open_2017} discuss ``smart city''
 applications. Vehicular use cases, including ones that are based on
@@ -55,17 +55,17 @@ and Truong et al.\cite{truong_software_2015}.
 Apart from individual use cases, some implementations address specific individual
 \gls{fc} issues, like Dsouza et al. who propose a framework for
 policy management to authenticate the various actors in applications
-such as smart
+like smart
 transportation systems \cite{dsouza_policy-driven_2014}.
 Yi et al.~\cite{yi_fog_2015}, besides pointing out vendor lock-in
 as a possible problem for \gls{fc}, attempt to exploit locality
 in a real-world experiment with face recognition software.
 
-In addition to academic work, commercial business solutions exist:
+In addition to academic work, commercial business solutions have also evolved.
 Cisco IOx~\cite{cisco_iox} promotes a
 system that allows traditional Linux application development on
 Cisco IOS powered networking devices.
-Google recently released ``Google \gls{IoT} cloud'' which sells a system for
+Google recently released ``Google \gls{IoT} cloud,'' a system for
 cloud based device management and a protocol bridge to connect edge nodes to
 Cloud analytic systems~\cite{google_iot_core} and other infrastructure.
 
@@ -73,19 +73,18 @@ Finally, there are different stances on operational aspects of
 \gls{fc} platforms. Some authors assume a centrally-managed and
 operated approach, perhaps including monetarization~\cite{mahmud_fog_2016,7868354}, whereas others~\cite{belli_design_2015}
 call for open interfaces and interoperability so that many
-Fogs can coexist and provide federated services.
+Fog environments can coexist and provide federated services.
 
 As will be discussed shortly, our platform Seattle offers a practical,
 useable sandbox implementation that tackles the widely-acknowledged
 node heterogeneity issue in \gls{fc}. Furthermore, Seattle's components
 are designed for loose coupling and precise trust boundaries, so as to
-enable multi-stakeholder operations. This enables deployments with
-minimal mutual trust requirements, out of the box.
-We have an active, live, and publicly accessible deployment of all
-Seattle components described in this paper. All software is
+enable multi-stakeholder operations. This enables out of the box deployments with
+minimal mutual trust requirements.
+All the Seattle components described in this paper are active, live, and
+publicly accessible. All software is
 \acrlong{FOSS}, and available from public
 repositories\footnote{\url{https://github.com/SeattleTestbed}}.
-
 
 \subsection{Contributions}
 
@@ -93,7 +92,7 @@ The contributions of this paper are as follows:
 \begin{itemize}
 \item We present Seattle, a practical platform for \gls{fc} research
 and applications
-with a real-world deployment on heterogeneous nodes,
+capable of real-world deployment on heterogeneous nodes,
 including desktop and laptop machines, Android devices,
 Raspberry Pis,
 and routers and embedded devices running OpenWrt.
@@ -104,14 +103,14 @@ and routers and embedded devices running OpenWrt.
 \item We further discuss how
 Seattle's system architecture caters to a variety of use cases,
 ranging from peer-to-peer deployments to full-fledged
-provisioning by a dedicated operator, and cooperative setups,
-where different stakeholders federate multiple parallel running
+provisioning by a dedicated operator, to cooperative setups,
+where different stakeholders unite multiple parallel running
 instances of services.
-\item We present our live deployment of Seattle which has been
+\item We present our live deployment of Seattle, which has been
 installed on tens of thousands of devices, and used by over 4,000
-researchers and students over its 8 years of operational history.
+researchers and students during its 8 years of operational history.
 \end{itemize}
 Our deployment of Seattle has been used in multiple contexts
-including research~\cite{li2015fence,rafetseder2013sensorium,zhuang2014sensibility,Eisl1010:Service,Tuts1010:Sustained,collares2011smart,zhuang2015privacy,cappos2014blursense,7133607} and education~\cite{Wallace_CCSC_2011,Cappos_CCSCCP_2010,Cappos_CCSCNW_2009,Cappos_SIGCSE_2014,Hooshangi_SIGCSE_2015};
-other groups have successfully reused and augmented Seattle components
-for their purposes~\cite{chard2010social,chard12ssc,caton2014social,muller2014tomato,tomato,eittenberger2012doubtless,zhuang2012distributed,zhuang2014taking,tredger2013building}.
+including research~\cite{li2015fence,rafetseder2013sensorium,zhuang2014sensibility,Eisl1010:Service,Tuts1010:Sustained,collares2011smart,zhuang2015privacy,cappos2014blursense,7133607} and education~\cite{Wallace_CCSC_2011,Cappos_CCSCCP_2010,Cappos_CCSCNW_2009,Cappos_SIGCSE_2014,Hooshangi_SIGCSE_2015}.
+In addition, other groups have successfully reused and augmented Seattle components
+for their own specific purposes~\cite{chard2010social,chard12ssc,caton2014social,muller2014tomato,tomato,eittenberger2012doubtless,zhuang2012distributed,zhuang2014taking,tredger2013building}.

@@ -15,15 +15,15 @@ safe execution environment for untrusted experimenter code.
 
 The choice of a high-level programming language environment trades
 off some reduction in performance against large gains in portability
-across \glspl{OS} and devices. Seattle's platform abstractions
+across \glspl{OS} and devices. Seattle's platform abstractions not only
 provide a unified \gls{API} to sandboxes on desktops and laptops,
-but als smartphones and even WiFi routers. Seattle sandboxes
-run on Windows, Mac OS X and later, Linux, the \glspl{BSD}, as
+but also smartphones and even WiFi routers. Seattle sandboxes
+run on Windows, Mac OS X, Linux, and the \glspl{BSD}, as
 well as Android and OpenWrt.
 
 Seattle's resource isolation scheme~\cite{li2015fence} ensures
 that each sandbox is confined to strict usage quotas for all
-resources of the hosting system, including \gls{CPU} time and
+resources of the hosting system, including its \gls{CPU} time and
 memory, used disk space, and even \gls{IP} addresses and port numbers
 on network interfaces.
 
@@ -31,17 +31,15 @@ In terms of code safety, Seattle keeps buggy or deliberately destructive
 experimenter code from harming the host machine. This is guaranteed
 by first checking the static code safety and forbidding potentially
 problematic statements (like importing arbitrary modules). At runtime,
-all of the \gls{API} functions strictly check their call parameters
-(so that, e.g., file names can be sanitized and restricted to the
-sandbox directory).
+all of the \gls{API} functions strictly check their call parameters,
+so that, for example, file names can be sanitized and restricted to the
+sandbox directory.
 
-There exist other sandbox implementations that augment Seattle's.
+Other sandbox implementations have augmented Seattle's basic functionality.
 Sensibility Testbed adds sensor functions to Seattle's Python-based
-sandbox; an internal research prototype of ours interfaces the
+sandbox. Another internal research prototype of interfaces the
 Seattle Resource Manager with Docker, so that its sandboxes are
-Linux Containers.
-
-
+Linux containers.
 
 %\subsection{Network Heterogeneity Masking}
 %
@@ -52,34 +50,33 @@ Linux Containers.
 %For the first, we run custom \gls{NAT} relays on public Seattle nodes
 
 
-
 \subsection{Component Interface Implementation}
 
-At the core of flexibly addressing operational heterogeneity (see
-Section~\ref{sec-op-flex}) lie clearly-defined interfaces
+A core solution to flexibly addressing operational heterogeneity (see
+Section~\ref{sec-op-flex}) lies in clearly-defined interfaces
 that use simple, text-based, mostly stateless protocols.
-This has a few benefits. The code handling communications between
-components can be much simpler as parsing is easy to verify,
-even manually. Then, it is much easier to reimplement these protocols
+Such an approach has a few benefits. Code handling communications between
+components can be much simpler, as parsing is easy to verify,
+even if done manually. As such, it is much easier to reimplement these protocols
 to interface with Seattle from other systems. Lastly, keeping
 and tracking state in a distributed fashion is a notoriously
-difficult problem which we attempt to avoid wherever possible.
+difficult problem that we attempt to avoid wherever possible.
 
 For communication that requires a token of privilege to trigger
-an action at the remote side, control messages contain signatures
+an action on the remote side, control messages contain signatures
 constructed with the private key of the experimenter. A
-sandbox that is controlled by that experimenter knows the
-corresponding public key (as it downloaded a Seattle installer
-customized to contain this key previously). Only after checking
-the message signature, privileged operations such as starting
+sandbox controlled by that experimenter knows the
+corresponding public key (as it previously downloaded a Seattle installer
+customized to contain this key). Only after checking
+the message signature, are privileged operations, such as starting
 or stopping the sandbox or transferring data to/from its
-local storage are permitted.
+local storage, permitted.
 
 Scripted (i.e. non-interactive) communications with the
 Clearinghouse, Installer Builder, and Software Updater all
 use \gls{HTTP} or \gls{HTTPS} in the form of an
-\acrshort{XML}-\acrshort{RPC} interface which further simplifies
-integration and simplification. Also, these interfaces
+\acrshort{XML}-\acrshort{RPC} interface, which further simplifies
+integration. Also, these interfaces
 follow what is known as Postel's Robustness
 Principle~\cite[\S2.10]{rfc793}, and are quite liberal in the
 data they accept from the remote side of the communication.
@@ -88,4 +85,3 @@ the call parameters are treated as opaque and are not
 interpreted by the receiving instance. Thus, additional
 information not previously foreseen and designed into the
 protocol can still pass.
-
