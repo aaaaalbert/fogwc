@@ -33,7 +33,7 @@ Seattle's public, live deployment.
 \end{figure}
 
 
-\subsection{Components}
+\subsection{Components}\label{sec-components}
 
 The core components of Seattle and their interconnections are
 show in Figure~\ref{fig:arch}.
@@ -86,7 +86,7 @@ through the resource manager interface, and provides a
 human-oriented interface to the experimenter. The experimenter
 authenticates against sandboxes by using cryptographic keys.
 
-All experimenters runs an experiment manager, and possess
+All experimenters run an experiment manager, and possess
 their own set of cryptographic keys. This enables interesting
 deployment options (and thus applications):
 Two experimenters could choose to mutually authenticate each
@@ -186,7 +186,8 @@ intermediary in the form of a Clearinghouse is required:
 trust relationships among the researchers and the device owners
 can be set up out-of-band as well.
 
-Another realization could utilize all of the components described above.
+Another realization could utilize all of the components described
+in Section~\ref{sec-components} above.
 Such a deployment would start with a sponsored set of sandbox resources,
 a clearinghouse to mediate access between sponsored and contributed
 sandboxes
