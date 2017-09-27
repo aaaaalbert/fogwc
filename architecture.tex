@@ -216,3 +216,54 @@ Operator-specific Clearinghouses serve as centralized trust
 anchors, and ``experiments'' would instead be ``apps'' for
 end users, with the former experimenters as over-the-top service or
 software providers.
+
+
+
+\subsection{Trust Management}\label{sec-trust}
+
+As detailed in the previous subsection, interpersonal or
+institutional trust plays an important role in a Seattle-based
+system. For instance, the device owner will only run an
+installer package obtained from an Installer Builder that is
+operated by a party they trust. Similarly, multiple Clearinghouses
+will only cooperate if mutual trust relationships can be
+established.
+
+Additionally, Seattle uses asymmetrical cryptography as
+a technical means to map out trust:
+Its core computational component, the Sandbox, has a notion
+of an \textit{Admin}
+% actually called Owners in Seattle, but I wanted to keep the
+% term distinct from "device owners" here.
+and \textit{Users}, all identified by
+public keys that are added to the installer package by the
+Installer Builder. The Admin of a sandbox can add or remove
+Users, split the resources of a sandbox, or give up privileges
+in favor of another Admin (i.e., another public key).
+An authorized User runs programs in the sandbox, transfers data,
+and so on. If more than one User is authorized for the same
+sandbox, they all share the same sandbox environment.
+
+Depending on the deployment scenario realized, interpersonal
+or institutional
+and technical trust relationships align at multiple different places
+and during interactions with multiple components in the system.
+The first point is the Installer Builder, as the person configuring
+the installer package chooses the initial set of Admin and User public
+keys going into it. Then, the two types of trust relationships align
+again in the Experiment Manager, when an Admin e.g. adds new User public
+keys to sandboxes they control. Finally, if the deployment uses a
+Clearinghouse to administrate sandbox Admin access, this is the
+third point of alignment: the Clearinghouse must trust an experimenter
+(i.e. sandbox user) before it places their public key in sandboxes
+it controls.
+
+As a final remark, the Software Updater component of the
+Seattle installer also contains a public key. It is used to
+verify the integrity of updates. This key is likely managed by
+the operator of the Installer Builder who controls the software
+that is packaged, but there is no intrinsic requirement for this
+to be the case --- a trust relationship may extend to
+this component as well.
+
+This concludes our overview of Seattle's system architecture.
