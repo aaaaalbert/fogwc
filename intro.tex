@@ -2,7 +2,7 @@
 \section{Introduction And Related Work}
 
 In recent years, \gls{fc} has established itself as an approach to
-Cloud Computing at the edge of the network. Fog systems are typically
+cloud computing at the edge of the network. Fog systems are typically
 characterized by the large number of geographically distributed
 nodes, ranging
 from embedded systems like network connected
@@ -10,8 +10,8 @@ sensors to smartphones and end-user laptops
 \cite{Bonomi:2012:FCR:2342509.2342513,Yi:2015:SFC:2757384.2757397,dastjerdi_fog_2016}.
 While leveraging the
 ubiquitous availability and specific capabilities of such devices brings
-many opportunities, it also carries new challenges unknown to traditional Cloud
-services. Such challenges include the heterogeneity of Fog
+many opportunities, it also carries new challenges unknown to traditional cloud
+services. Such challenges include the heterogeneity of fog
 nodes~\cite{Bonomi:2012:FCR:2342509.2342513,7868354,Yi:2015:SFC:2757384.2757397,mahmud_fog_2016},
 their accessibility, e.g. behind private networks, and extended security and
 privacy requirements \cite{botta_integration_2016}.
@@ -19,11 +19,11 @@ privacy requirements \cite{botta_integration_2016}.
 Another issue is that existing proposed \gls{fc} architectures have
 been described
 as ``siloed''~\cite{belli_design_2015}, referring to the lack of
-open interfaces that characterize today's Fog devices and infrastructures.
+open interfaces that characterize today's fog devices and infrastructures.
 Furthermore, opportunities and challenges have been widely addressed in the
 respective literature from a theoretical point of view, but actual \gls{fc}
 implementations --- let alone actively deployed and
-publicly available platforms that can be used in Fog contexts --- are rare.
+publicly available platforms that can be used in fog contexts --- are rare.
 
 In this paper, we introduce our Seattle platform and make the case for
 why its unique designed is well suited for \gls{fc} applications. But,
@@ -36,14 +36,14 @@ Emerging technologies are a prospective area for research in \gls{fc}.
 Bellavista et al.~\cite{bellavista_feasibility_2017} investigate the
 applicability of Docker containers for \gls{fc}. The work uses and extends
 the open-source Kura framework to create \gls{IoT} gateways that control information
-flow between Fog nodes and the Cloud, while also reviewing and benchmarking
-different container related technologies used in the Fog nodes.
+flow between fog nodes and the cloud, while also reviewing and benchmarking
+different container related technologies used in the fog nodes.
 The focus of the work tends towards \gls{IoT} computing, where tailored services run
-on Fog nodes to gather data that is forwarded to the Cloud for further processing.
+on fog nodes to gather data that is forwarded to the cloud for further processing.
 A similar evaluation of Docker containers for edge computing can be found in
 \cite{ismail_evaluation_2015}.
 
-Others have contributed Fog platforms for very specific use cases, e.g.
+Others have contributed fog platforms for very specific use cases, e.g.
 an emergency alert system using smartphones that propagate alerts to nearby
 emergency departments \cite{7134091}; an idea also proposed by Masip
 et al.~\cite{masip-bruin_foggy_2016}. Gazis et al. introduce an ``Adaptive
@@ -70,13 +70,13 @@ system that allows traditional Linux application development on
 Cisco IOS powered networking devices.
 Google recently released ``Google \gls{IoT} cloud,'' a system for
 cloud based device management and a protocol bridge to connect edge nodes to
-Cloud analytic systems~\cite{google_iot_core} and other infrastructure.
+cloud analytic systems~\cite{google_iot_core} and other infrastructure.
 
 Finally, there are different stances on operational aspects of
 \gls{fc} platforms. Some authors assume a centrally-managed and
 operated approach, perhaps including monetarization~\cite{mahmud_fog_2016,7868354}, whereas others~\cite{belli_design_2015}
 call for open interfaces and interoperability so that many
-Fog environments can coexist and provide federated services.
+fog environments can coexist and provide federated services.
 
 As will be discussed shortly, our platform Seattle offers a practical,
 useable sandbox implementation that tackles the widely-acknowledged
