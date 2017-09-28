@@ -1,7 +1,7 @@
 %!TEX root = paper.tex
 \section{Implementation}
 
-In this section we will look at the actual implementations of
+In this section we will look at actual implementations of
 selected components, with a focus on those aspects that help
 Seattle solve the node and operational heterogeneity
 challenges encountered in \gls{fc}.
@@ -71,7 +71,7 @@ constructed with the private key of the experimenter. A
 sandbox controlled by that experimenter knows the
 corresponding public key (as it previously downloaded a Seattle installer
 customized to contain this key). Only after checking
-the message signature, are privileged operations, such as starting
+the message signature are privileged operations, such as starting
 or stopping the sandbox or transferring data to/from its
 local storage, permitted.
 
@@ -83,9 +83,8 @@ integration. Also, these interfaces
 follow what is known as Postel's Robustness
 Principle~\cite[\S2.10]{rfc793}, and are quite liberal in the
 data they accept from the remote side of the communication.
-This has practical relevance for some of the calls:
-the call parameters are treated as opaque and are not
+This has practical relevance for some of the calls, as
+call parameters are treated as opaque and are not
 interpreted by the receiving instance. Thus, additional
 information not previously foreseen and designed into the
 protocol can still pass.
-
