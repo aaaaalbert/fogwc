@@ -5,8 +5,8 @@ In recent years, \gls{fc} has established itself as an approach to
 cloud computing at the edge of the network. Fog systems are typically
 characterized by the large number of geographically distributed
 nodes, ranging
-from embedded systems like network connected
-sensors to smartphones and end-user laptops
+from embedded systems, like network connected
+sensors, to smartphones and end-user laptops
 \cite{Bonomi:2012:FCR:2342509.2342513,Yi:2015:SFC:2757384.2757397,dastjerdi_fog_2016}.
 While leveraging the
 ubiquitous availability and specific capabilities of such devices brings
@@ -26,45 +26,47 @@ implementations --- let alone actively deployed and
 publicly available platforms that can be used in fog contexts --- are rare.
 
 In this paper, we introduce our Seattle platform and make the case for
-why its unique designed is well suited for \gls{fc} applications. But,
+why its unique design is well suited for \gls{fc} applications. But,
 to provide context, we first review relevant aspects of the existing
 literature.
 
 \subsection{Related Work}
 
-Emerging technologies are a prospective area for research in \gls{fc}.
-Bellavista et al.~\cite{bellavista_feasibility_2017} investigate the
+Emerging technologies have opened potentially promising new areas for research
+in \gls{fc}. Bellavista et al.~\cite{bellavista_feasibility_2017} investigate the
 applicability of Docker containers for \gls{fc}. The work uses and extends
 the open-source Kura framework to create \gls{IoT} gateways that control information
 flow between fog nodes and the cloud, while also reviewing and benchmarking
-different container related technologies used in the fog nodes.
-The focus of the work tends towards \gls{IoT} computing, where tailored services run
+different container-related technologies used in these nodes.
+The focus of this work is on \gls{IoT} computing, where tailored services run
 on fog nodes to gather data that is forwarded to the cloud for further processing.
 A similar evaluation of Docker containers for edge computing can be found in
 \cite{ismail_evaluation_2015}.
 
 Others have contributed fog platforms for very specific use cases, e.g.
 an emergency alert system using smartphones that propagate alerts to nearby
-emergency departments \cite{7134091}; an idea also proposed by Masip
+emergency departments \cite{7134091}, an idea also proposed by Masip-Bruin
 et al.~\cite{masip-bruin_foggy_2016}. Gazis et al. introduce an ``Adaptive
 Operations Platform''
-to effectively apply equipment failure models within the context of Industrial
+to effectively apply equipment failure models to the fog computing
+infrastructure of Industrial
 \gls{IoT} \cite{gazis_components_2015}.
-Amrutur et al.\cite{amrutur_open_2017} discuss ``smart city''
-applications. Vehicular use cases, including ones that are based on
+Amrutur et al.\cite{amrutur_open_2017} discuss the use of
+a testbed for "smart city" apps that could be mounted on
+light poles. Vehicular use cases, including ones that are based on
 ad-hoc networks, are presented by Bitam et al.~\cite{bitam_vanet-cloud:_2015}
 and Truong et al.\cite{truong_software_2015}.
 
 Apart from individual use cases, some implementations address specific individual
-\gls{fc} issues, like Dsouza et al. who propose a framework for
-policy management to authenticate the various actors in applications
-like smart
-transportation systems \cite{dsouza_policy-driven_2014}.
-Yi et al.~\cite{yi_fog_2015}, besides pointing out vendor lock-in
-as a possible problem for \gls{fc}, attempt to exploit locality
+\gls{fc} issues, like Dsouza et al. who propose a policy management framework
+to authenticate the various actors in applications
+like smart transportation systems \cite{dsouza_policy-driven_2014}.
+Yi et al.~\cite{yi_fog_2015} points out vendor lock-in
+as a possible problem for \gls{fc}, and attempts to exploit locality
 in a real-world experiment with face recognition software.
 
-In addition to academic work, commercial business solutions have also evolved.
+In addition to academic work, commercial business solutions using fog computing
+have also evolved.
 Cisco IOx~\cite{cisco_iox} promotes a
 system that allows traditional Linux application development on
 Cisco IOS powered networking devices.
@@ -94,8 +96,8 @@ repositories\footnote{\texttt{\url{https://github.com/SeattleTestbed}}}.
 
 The contributions of this paper are as follows:
 \begin{itemize}
-\item We present Seattle, a practical platform for \gls{fc} research
-and applications
+\item We present Seattle, a platform uniquely adaptable for
+ \gls{fc} research and applications. Seattle is
 capable of real-world deployment on heterogeneous nodes,
 including desktop and laptop machines, Android devices,
 Raspberry Pis,
@@ -104,8 +106,8 @@ and routers and embedded devices running OpenWrt.
 %general-purpose code on a variety of platforms,
 %and which self-isolate so as to not
 %affect the safety and performance of the host node.
-\item We further discuss how
-Seattle's system architecture caters to a variety of use cases,
+\item We explain how
+Seattle's system architecture can cater to a variety of use cases,
 ranging from peer-to-peer deployments to full-fledged
 provisioning by a dedicated operator, to cooperative setups,
 where different stakeholders federate and unite multiple parallel running
@@ -114,7 +116,7 @@ instances of services.
 installed on tens of thousands of devices, and used by over 4,000
 researchers and students during its 8 years of operational history.
 \end{itemize}
-Our deployment of Seattle has been used in multiple contexts
+Our past deployments of Seattle have served multiple contexts
 including research~\cite{li2015fence,rafetseder2013sensorium,zhuang2014sensibility,Eisl1010:Service,Tuts1010:Sustained,collares2011smart,zhuang2015privacy,cappos2014blursense,7133607} and education~\cite{Wallace_CCSC_2011,Cappos_CCSCCP_2010,Cappos_CCSCNW_2009,Cappos_SIGCSE_2014,Hooshangi_SIGCSE_2015}.
 In addition, other groups have successfully reused and augmented Seattle components
 for their own specific purposes~\cite{chard2010social,chard12ssc,caton2014social,muller2014tomato,tomato,eittenberger2012doubtless,zhuang2012distributed,zhuang2014taking,tredger2013building}.
