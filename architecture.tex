@@ -39,48 +39,49 @@ The core components of Seattle and their interconnections are
 show in Figure~\ref{fig:arch}.
 %The components fall into three categories: device software,
 %infrastructure, and control.
-
 We first introduce the components running on all devices that
 run Seattle.
 For computation, the primary component is a restricted,
 performance- and security-isolated Python-based
-\textit{Sandbox}~\cite{RepySandbox,li2015fence}.
+\textit{sandbox}~\cite{RepySandbox,li2015fence}.
 The sandbox \gls{API} provides
 networking, file, threading, and other functions to
 the code it executes. Note that
 due to Seattle's research and educational background, we
 call code that is executed in sandboxes an ``experiment,''
 regardless of its actual nature.
+In the context of \gls{fc}, the sandbox runs code to read
+sensors, trigger actuators, and performs distributed computations.
 
-The \textit{Resource Manager} combines the functionality of
+The \textit{resource manager} combines the functionality of
 a hypervisor with a remote-control server.
 It isolates % chroots, effectively!
 sandboxes that run in
 parallel, and interfaces with them on behalf of authorized remote
-parties to start or stop them, upload and download data, reset
-sandboxes, or transfer ownership. The sandboxes on one
+parties to start, stop, or reset them, upload and download data,
+or transfer ownership. The sandboxes on one
 device can all have different authorized users if so desired,
 so that one Seattle node can serve multiple experimenters.
 Due to the heterogeneity encountered in today's networks,
-the Resource Manager also includes techniques to traverse
+the resource manager also includes techniques to traverse
 \gls{NAT} gateways and firewalls as often found in end-user
 gateway routers.
 
-The \textit{Device Manager} % (installer with \texttt{--percentage}, start/stop scripts, uninstaller, softwareupdater): device owner retains control!
+The \textit{device manager} % (installer with \texttt{--percentage}, start/stop scripts, uninstaller, softwareupdater): device owner retains control!
 is the device owner's interface to enable or disable a Seattle
 install, and choose the amount of resources that it may consume on the respective
 device.
 
-The \textit{Software Updater} keeps all components of the
+The \textit{software updater} keeps all components of the
 device software up to date. This concludes the overview of
 device-side Seattle components.
 %Other components are run either by experimenters, or
 %infra-ops, or how should we say this so that it's exact?
-\\
+%\\
 
 To control the fundamental functions of sandboxes, such as
 starting the execution of code, or downloading collected data,
-an \textit{Experiment Manager} % (seash)
+an \textit{experiment manager} % (seash)
 is used. The experiment manager programmatically contacts sandboxes
 through the resource manager interface, and provides a
 human-oriented interface to the experimenter. The experimenter
@@ -92,13 +93,14 @@ deployment options (and thus applications):
 Two experimenters could choose to mutually authenticate each
 other on the sandboxes they control, or swap resources, and
 so on. Thus, it makes more sandboxes available to an experiment than
-a single experimenter could ever reach.
-\\
+a single experimenter could ever reach. Section~\ref{sec-trust}
+explains in greater detail how Seattle manages trust relationships.
+%\\
 
 Seattle's device software and an initial set of cryptographic
 keys controlling the sandboxes are shipped in the form of a bundled
 installer for the specific platform \gls{OS}.
-The \textit{Installer Builder} component is responsible for
+The \textit{installer builder} component is responsible for
 packaging and hosting the code and public keys.
 The installer builder allows experimenters to create their own
 custom installers, where they get to choose the public key or keys
@@ -107,17 +109,17 @@ can be referenced through its specific, static \gls{URL}.
 Thus, by selecting and installing a specific packaged installer,
 device owners can choose which experimenters to initially grant
 access to sandboxes on their devices.
-\\
+%\\
 
 %This sums up all of the Seattle components required for a
 %self-hosted, infrastructure-less deployment already.
 
 The default Seattle architecture also includes a
-\textit{Lookup Service}. This is a generic network-accessible
-key/value store that the Resource Manager and Experiment Manager
+\textit{lookup service}. This is a generic network-accessible
+key/value store that the resource manager and experiment manager
 can use to announce and retrieve information about sandboxes.
-For instance, a Resource Manager announces its contact information
-(such as its own or a \gls{NAT} forwarder's \gls{IP} address and port number) under
+For instance, a resource manager announces its contact information
+(such as its own or a \gls{NAT} forwarder's \acrshort{IP} address and port number) under
 the public keys of all currently authorized experimenters.
 The experiment manager retrieves this contact information by looking up
 the experimenter's public key at the lookup service, and then
@@ -127,25 +129,25 @@ that the experimenter can control.
 We run \textit{\gls{NAT} Relays} on some Seattle nodes that are
 accessible from the public Internet. Using these relays, firewalled
 or \gls{NAT}ted nodes have a common, public meeting point to
-which they can direct Experiment Managers.
+which they can direct experiment managers.
 
-Lastly, Seattle provides a \textit{Clearinghouse} which is a
+Lastly, Seattle provides a \textit{clearinghouse} which is a
 centralized sandbox-sharing site. As motivated earlier,
 sandboxes can be swapped; a clearinghouse can act as a trusted
 intermediary on behalf of all registered experimenters, thus creating
 a large pool of available sandboxes without requiring all experimenters to
 set up individual mutual trust relationships amongst each others.
-The Clearinghouse uses the same Resource Manager interfaces as the
-Experiment Manager, and provides a human-oriented interface through which
+The clearinghouse uses the same resource manager interfaces as the
+experiment manager, and provides a human-oriented interface through which
 experimenters can request and release sandboxes.
-The Clearinghouse implements internal policies
+The clearinghouse implements internal policies
 that govern the exact rules for swapping sandboxes between
 registered experimenters.
 
 This concludes the overview of Seattle components. Our live deployment
 of Seattle includes implementations of all components.
 This also includes a
-Clearinghouse that offers free access to an initial set of sandboxes
+clearinghouse that offers free access to an initial set of sandboxes
 for all registered experimenters.
 
 
@@ -172,7 +174,7 @@ and operated \gls{fc} setups.
 
 For instance, in a local experimental deployment, the owner of all
 devices might also serve as an experimenter at the same time. If
-the Experiment Managers and Installer Builders can be reused
+the experiment managers and installer builders can be reused
 from existing deployments, no additional effort is involved in
 setting up the infrastructure.
 A setup on exclusively-controlled, all-local devices can serve as
@@ -182,7 +184,7 @@ a testbed for research, or enables device owners to run an
 The same approach also scales to groups of device owners and experimenters
 that federate
 to share resources on (parts of) their setups. No trusted
-intermediary in the form of a Clearinghouse is required:
+intermediary in the form of a clearinghouse is required:
 trust relationships among the researchers and the device owners
 can be set up out-of-band as well.
 
@@ -201,18 +203,18 @@ Section~\ref{sec-deployment} details our current deployment.
 Sensibility Testbed~\cite{zhuang2014sensibility} and Social Compute
 Cloud~\cite{caton2014social} provide a similar breadth in capabilities
 as Seattle. However, they only operate a partial infrastructure, and
-reuse much of Seattle's. Their particular Clearinghouse
+reuse much of Seattle's. Their particular clearinghouse
 implementations differ from Seattle's in terms of user interfaces
 and policy implementations. Sensibility also provides a new sandbox
 type that allows privacy-preserving access to sensors on Android
-smartphones and tablets. Other components, including the Experiment
-Manager, are reused without changes.
+smartphones and tablets. Other components, including the experiment
+manager, are reused without changes.
 
 Finally, we envision that multiple central operators
 could set up their own instances of
 all components, and then federate using Seattle's open interfaces
 to barter or trade resources. % With due thanks to Peter Reichl from whom I borrowed the formulation.
-Operator-specific Clearinghouses serve as centralized trust
+Operator-specific clearinghouses serve as centralized trust
 anchors, and ``experiments'' would instead be ``apps'' for
 end users, with the former experimenters as over-the-top service or
 software providers.
@@ -224,46 +226,45 @@ software providers.
 As detailed in the previous subsection, interpersonal or
 institutional trust plays an important role in a Seattle-based
 system. For instance, the device owner will only run an
-installer package obtained from an Installer Builder that is
-operated by a party they trust. Similarly, multiple Clearinghouses
+installer package obtained from an installer builder that is
+operated by a party they trust. Similarly, multiple clearinghouses
 will only cooperate if mutual trust relationships can be
 established.
 
 Additionally, Seattle uses asymmetrical cryptography as
 a technical means to map out trust:
-Its core computational component, the Sandbox, has a notion
-of an \textit{Admin}
+Its core computational component, the sandbox, has a notion
+of an \textit{admin}
 % actually called Owners in Seattle, but I wanted to keep the
 % term distinct from "device owners" here.
-and \textit{Users}, all identified by
+and \textit{users}, all identified by
 public keys that are added to the installer package by the
-Installer Builder. The Admin of a sandbox can add or remove
-Users, split the resources of a sandbox, or give up privileges
-in favor of another Admin (i.e., another public key).
-An authorized User runs programs in the sandbox, transfers data,
-and so on. If more than one User is authorized for the same
+installer builder. The admin of a sandbox can add or remove
+users, split the resources of a sandbox, or give up privileges
+in favor of another admin (i.e., another public key).
+An authorized user runs programs in the sandbox, transfers data,
+and so on. If more than one user is authorized for the same
 sandbox, they all share the same sandbox environment.
 
 Depending on the deployment scenario realized, interpersonal
 or institutional
 and technical trust relationships align at multiple different places
 and during interactions with multiple components in the system.
-The first point is the Installer Builder, as the person configuring
-the installer package chooses the initial set of Admin and User public
+The first point is the installer builder, as the person configuring
+the installer package chooses the initial set of admin and user public
 keys going into it. Then, the two types of trust relationships align
-again in the Experiment Manager, when an Admin e.g. adds new User public
+again in the experiment manager, when an admin e.g. adds new user public
 keys to sandboxes they control. Finally, if the deployment uses a
-Clearinghouse to administrate sandbox Admin access, this is the
-third point of alignment: the Clearinghouse must trust an experimenter
+clearinghouse to administrate sandbox admin access, this is the
+third point of alignment: the clearinghouse must trust an experimenter
 (i.e. sandbox user) before it places their public key in sandboxes
 it controls.
 
-As a final remark, the Software Updater component of the
+As a final remark, the software updater component of the
 Seattle installer also contains a public key. It is used to
 verify the integrity of updates. This key is likely managed by
-the operator of the Installer Builder who controls the software
+the operator of the installer builder who controls the software
 that is packaged, but there is no intrinsic requirement for this
 to be the case --- a trust relationship may extend to
 this component as well.
-
 This concludes our overview of Seattle's system architecture.
